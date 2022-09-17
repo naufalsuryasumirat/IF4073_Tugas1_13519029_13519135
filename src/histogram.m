@@ -1,7 +1,7 @@
 img = imread('img/fig_0241_c_einstein_high_contrast.tif');
 img_color = imread('img/fig_0630_01_strawberries_fullcolor.tif');
 
-img_plot(img_color, 1);
+img_plot(img_color, 1, 1);
 
 %{
   Description: implementation of rgb values to grayscale values
@@ -48,8 +48,7 @@ end
   Input: Vector with 256 columns of pixel occurences
 %}
 function occurences_to_plot(occ)
-  figure
-  stem(0:255, occ);
+  figure, stem(0:255, occ);
 end
 
 %{
@@ -57,7 +56,7 @@ end
   Output: Figures of plots and images
   Input: image matrix (grayscale/colored)
 %}
-function img_plot(img, show)
+function img_plot(img, show_img, show_split)
   [~, ~, dim] = size(img);
   if dim == 1 % if image is already in grayscale
     occurences_to_plot(calc_occurences(img))
@@ -73,23 +72,26 @@ function img_plot(img, show)
   occurences_to_plot(calc_occurences(b))
   occurences_to_plot(calc_occurences(gr))
 
-  if show
+  if show_img
+    figure, imshow(img); % show original image
+  end
+
+  if show_split
     red = img;
     red(:,:,2:3) = 0; % clear values except red
-    figure
-    imshow(red); % show image with only red values
+    figure, imshow(red); % show image with only red values
 
     green = img;
     green(:,:,[1,3]) = 0; % clear values except green
-    figure
-    imshow(green); % show image with only green values
+    figure, imshow(green); % show image with only green values
 
     blue = img;
     blue(:,:,1:2) = 0; % clear values  except blue
-    figure
-    imshow(blue); % show image with only blue values
+    figure, imshow(blue); % show image with only blue values
 
-    figure
-    imshow(red + green + blue); % show original image
+    grayscale = rgb_to_grayscale(img); % convert colored image to grayscale
+    figure, imshow(grayscale); % show grayscale version of image
+
+    % figure, imshow(red + green + blue);
   end
 end
