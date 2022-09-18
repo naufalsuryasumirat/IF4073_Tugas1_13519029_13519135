@@ -1,10 +1,6 @@
 img_color = imread('img/fig_0241_a_einstetin_low_contrast.tif');
 figure, imshow(img_color);
 brightened_img = brightening(img_color, 1.5, 50);
-% disp(brightened_img);
-disp(size(brightened_img));
-disp(size(img_color));
-disp(uint8(-8));
 figure, imshow(brightened_img);
 
 %{

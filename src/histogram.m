@@ -1,7 +1,7 @@
 img = imread('img/fig_0241_c_einstein_high_contrast.tif');
 img_color = imread('img/fig_0630_01_strawberries_fullcolor.tif');
 
-img_plot(img_color, 1, 1);
+img_plot(img_color, false, false);
 
 %{
   Description: implementation of rgb values to grayscale values
@@ -10,20 +10,11 @@ img_plot(img_color, 1, 1);
   Input: 2D Matrix of n dimension n > 0
 %}
 function grayscale = rgb_to_grayscale(matrix)
-  [row, col, dim] = size(matrix);
-  if dim == 1 % if image is already in grayscale values
-      grayscale = matrix;
-      return
-  end
+  [~, ~, dim] = size(matrix);
+  % if image is already in grayscale values
+  if dim == 1, grayscale = matrix; return, end
 
-  grayscale = zeros(row, col);
-
-  for r = 1:row
-    for c = 1:col
-      grayscale(r,c) = 0.2989 * matrix(r,c,1) + 0.587 * matrix(r,c,2) + 0.114 * matrix(r,c,3);
-    end
-  end
-
+  grayscale = matrix(:,:,1) * 0.2989 + matrix(:,:,2) * 0.587 + matrix(:,:,3) * 0.114;
   grayscale = uint8(grayscale);
 end
 
@@ -48,7 +39,9 @@ end
   Input: Vector with 256 columns of pixel occurences
 %}
 function occurences_to_plot(occ)
-  figure, stem(0:255, occ);
+  occ(occ==0) = nan; % converts 0 to nan, to not show in stem plot
+  figure, stem(0:255, occ, 'MarkerSize', 0.1);
+  xlim([0 255]); % limit x value to in range of [0, 255]
 end
 
 %{
@@ -58,10 +51,8 @@ end
 %}
 function img_plot(img, show_img, show_split)
   [~, ~, dim] = size(img);
-  if dim == 1 % if image is already in grayscale
-    occurences_to_plot(calc_occurences(img))
-    return
-  end
+  % if image is already in grayscale
+  if dim == 1, occurences_to_plot(calc_occurences(img)); return, end
 
   r = img(:,:,1);
   g = img(:,:,2);
