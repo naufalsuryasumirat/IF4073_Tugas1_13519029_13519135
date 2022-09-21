@@ -1,8 +1,3 @@
-img = imread('img/fig_0241_c_einstein_high_contrast.tif');
-img_color = imread('img/fig_0630_01_strawberries_fullcolor.tif');
-
-img_plot(img_color, false, false);
-
 %{
   Description: implementation of rgb values to grayscale values
   Output: 2D matrix of size row(matrix), col(matrix), with grayscale

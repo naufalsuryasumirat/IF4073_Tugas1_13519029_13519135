@@ -1,8 +1,3 @@
-img_color = imread('img/fig_0241_a_einstetin_low_contrast.tif');
-figure, imshow(img_color);
-transformed_img = log_transform(img_color, 10);
-figure, imshow(transformed_img);
-
 %{
   Description: Fix image quality using log transformation with formula s = c * log(1 + r)
   Output: Transformed matrix using log transformation formula

@@ -1,8 +1,3 @@
-img_color = imread('img/fig_0241_a_einstetin_low_contrast.tif');
-figure, imshow(img_color);
-transformed_img = power_transform(img_color, 1.1, 1.25);
-figure, imshow(transformed_img);
-
 %{
   Description: Fix image quality using power transformation with formula s = cr^γ
   Output: Transformed matrix using power transformation formula
